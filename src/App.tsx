@@ -11,6 +11,7 @@ import { FarmIntelligenceDashboard } from './components/FarmIntelligenceDashboar
 import { SoilNutrientModule } from './components/SoilNutrientModule';
 import { ActionPlannerView } from './components/ActionPlannerView';
 import { AgriculturalAssistant } from './components/AgriculturalAssistant';
+import { ContactView } from './components/ContactView';
 import { 
   Sprout, 
   MapPin, 
@@ -26,7 +27,8 @@ import {
   Satellite,
   FlaskConical,
   CalendarDays,
-  Bot
+  Bot,
+  Mail
 } from 'lucide-react';
 import { reverseGeocodeCoordinates, coordinatesToLocation } from './services/geocoding';
 import type { AppStep } from './types';
@@ -279,6 +281,18 @@ export function App() {
               <BookText className="w-3.5 h-3.5 text-forest-600" />
               <span>{t.nav.about}</span>
             </button>
+
+            <button
+              onClick={() => navigateTo('contact')}
+              className={`px-2.5 py-1.5 rounded transition-colors flex items-center gap-1 whitespace-nowrap shrink-0 ${
+                currentStep === 'contact'
+                  ? 'bg-forest-50 text-forest-800 font-bold border-b-2 border-forest-700'
+                  : 'text-ink-secondary hover:text-ink hover:bg-stone-100'
+              }`}
+            >
+              <Mail className="w-3.5 h-3.5 text-forest-600" />
+              <span>{t.nav.contact}</span>
+            </button>
           </nav>
 
           {/* Action / Current Selected Pill */}
@@ -426,6 +440,19 @@ export function App() {
               <span className="flex items-center gap-2">
                 <BookText className="w-4 h-4 text-forest-600" />
                 {t.nav.about}
+              </span>
+              <ChevronRight className="w-4 h-4 text-stone-400" />
+            </button>
+
+            <button
+              onClick={() => navigateTo('contact')}
+              className={`w-full text-left px-3 py-2.5 rounded text-sm font-semibold flex items-center justify-between ${
+                currentStep === 'contact' ? 'bg-forest-50 text-forest-800' : 'text-ink hover:bg-stone-100'
+              }`}
+            >
+              <span className="flex items-center gap-2">
+                <Mail className="w-4 h-4 text-forest-600" />
+                {t.nav.contact}
               </span>
               <ChevronRight className="w-4 h-4 text-stone-400" />
             </button>
@@ -701,6 +728,9 @@ export function App() {
             <MethodologyView />
           </div>
         )}
+
+        {/* VIEW 6: CONTACT US */}
+        {currentStep === 'contact' && <ContactView />}
       </main>
 
       {/* ============================================================
@@ -757,6 +787,11 @@ export function App() {
                 <li>
                   <button onClick={() => navigateTo('about')} className="hover:text-forest-800 hover:underline">
                     {t.nav.about}
+                  </button>
+                </li>
+                <li>
+                  <button onClick={() => navigateTo('contact')} className="hover:text-forest-800 hover:underline">
+                    {t.nav.contact}
                   </button>
                 </li>
               </ul>

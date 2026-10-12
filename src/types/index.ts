@@ -412,7 +412,8 @@ export type AppStep =
   | 'climate'
   | 'planner'
   | 'compare'
-  | 'methodology';
+  | 'methodology'
+  | 'contact';
 
 export type AppLanguage = 'en' | 'ne';
 
