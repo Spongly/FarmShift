@@ -1,7 +1,7 @@
 \documentclass[11pt,a4paper]{report}
 
 % Page Layout & Geometry
-\usepackage[a4paper,top=2.5cm,bottom=2.5cm,left=2.5cm,right=2.5cm,headheight=14pt]{geometry}
+\usepackage[a4paper,top=2.8cm,bottom=2.5cm,left=2.5cm,right=2.5cm,headheight=16pt]{geometry}
 
 % Color Definitions (Clean Academic / Restrained Agricultural Green)
 \usepackage[table,xcdraw]{xcolor}
@@ -21,7 +21,7 @@
 \usepackage{array}
 \usepackage{graphicx}
 \usepackage{tikz}
-\usetikzlibrary{shapes.geometric,arrows.meta,positioning,calc}
+\usetikzlibrary{shapes.geometric,arrows.meta,positioning,calc,fit,backgrounds}
 \usepackage{listings}
 \usepackage{microtype}
 \usepackage[numbers,sort&compress]{natbib}
@@ -30,11 +30,12 @@
 % Hyperref Setup
 \usepackage[hidelinks,colorlinks=true,linkcolor=primarygreen,citecolor=primarygreen,urlcolor=primarygreen]{hyperref}
 
-% Header and Footer Styling
+% Header and Footer Styling — prevent overlap on long chapter titles
 \pagestyle{fancy}
 \fancyhf{}
-\fancyhead[L]{\textcolor{gray}{\small\leftmark}}
-\fancyhead[R]{\textcolor{gray}{\small FarmShift Nepal — Technical Report}}
+\renewcommand{\chaptermark}[1]{\markboth{\MakeUppercase{\chaptername\ \thechapter.\ \ #1}}{}}
+\fancyhead[L]{\textcolor{gray}{\small\begin{minipage}[t]{0.55\textwidth}\raggedright\leftmark\end{minipage}}}
+\fancyhead[R]{\textcolor{gray}{\small FarmShift Nepal}}
 \fancyfoot[C]{\thepage}
 \renewcommand{\headrulewidth}{0.4pt}
 \renewcommand{\footrulewidth}{0pt}
@@ -230,6 +231,116 @@ The platform enforces a zero-credential architecture:
   \item \textbf{Zero Boundary Tracking:} Field coordinates, cadastral boundaries, and soil test results remain entirely in browser volatile memory (React component state and context) and are never transmitted to external analytics servers.
   \item \textbf{Deterministic Execution:} Calculations are mathematically deterministic; given identical inputs, the system produces identical, verifiable recommendations.
 \end{itemize}
+
+\section{Expanded System Architecture}
+
+Figure~\ref{fig:full-arch} presents the full component topology of both presentation and service layers, including all seven UI views and nine client-side intelligence services.
+
+\begin{figure}[htbp]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+  node distance=0.5cm,
+  every node/.style={font=\small},
+  uibox/.style={rectangle, draw=darkcharcoal, fill=white, text width=3.6cm, text centered, rounded corners=3pt, minimum height=0.7cm, font=\footnotesize},
+  svcbox/.style={rectangle, draw=primarygreen, fill=primarygreen!8, text width=3.6cm, text centered, rounded corners=3pt, minimum height=0.7cm, font=\footnotesize},
+  userbox/.style={rectangle, draw=primarygreen, fill=primarygreen!15, text width=4.5cm, text centered, rounded corners=6pt, minimum height=0.9cm, font=\small\bfseries, line width=1.2pt},
+  groupbox/.style={rectangle, draw=bordergray, fill=lightgraybg, rounded corners=6pt, inner sep=10pt},
+  arr/.style={draw=primarygreen, -{Latex[length=2mm]}, line width=0.8pt}
+]
+  % User
+  \node [userbox] (user) {Farmer / Agronomist (Browser)};
+
+  % --- Presentation Layer ---
+  \node [uibox, below=1.2cm of user, xshift=-5.5cm] (p1) {ServiceHome\\(Landing \& Guidance)};
+  \node [uibox, right=0.3cm of p1] (p2) {FarmIntelligence\\Dashboard};
+  \node [uibox, right=0.3cm of p2] (p3) {RotationPlanner\\(MCDA \& ML)};
+  \node [uibox, below=0.4cm of p1] (p4) {SoilNutrientModule\\(NPK Calculator)};
+  \node [uibox, below=0.4cm of p2] (p5) {ActionPlannerView\\(4-Week Calendar)};
+  \node [uibox, below=0.4cm of p3] (p6) {AgriculturalAssistant\\(RAG Chatbot)};
+  \node [uibox, right=0.3cm of p3] (p7) {InteractiveSatelliteMap\\(NASA GIBS Leaflet)};
+
+  \begin{scope}[on background layer]
+    \node [groupbox, fit=(p1)(p2)(p3)(p4)(p5)(p6)(p7), label={[font=\small\bfseries, anchor=north west]north west:Presentation Layer (React 18 + Tailwind CSS)}] (pres) {};
+  \end{scope}
+
+  % --- Service Layer ---
+  \node [svcbox, below=2.8cm of p4, xshift=-0.5cm] (s1) {\texttt{nasaPower.ts}\\MERRA-2/CERES Client};
+  \node [svcbox, right=0.3cm of s1] (s2) {\texttt{satelliteLayers.ts}\\EOSDIS GIBS WMTS};
+  \node [svcbox, right=0.3cm of s2] (s3) {\texttt{weatherForecast.ts}\\Open-Meteo Blend};
+  \node [svcbox, below=0.4cm of s1] (s4) {\texttt{geocoding.ts}\\Nominatim Geocoder};
+  \node [svcbox, below=0.4cm of s2] (s5) {\texttt{rotationEngine.ts}\\5-Criteria Heuristic};
+  \node [svcbox, below=0.4cm of s3] (s6) {\texttt{cropMlModel.ts}\\Decision Ensemble};
+  \node [svcbox, right=0.3cm of s3] (s7) {\texttt{soilNutrientService.ts}\\MoALD Fertilizer};
+  \node [svcbox, below=0.4cm of s7] (s8) {\texttt{farmActionPlanner.ts}\\Weekly Task Engine};
+  \node [svcbox, right=0.3cm of s7] (s9) {\texttt{agriculturalKnowledge}\\NARC Evidence RAG};
+
+  \begin{scope}[on background layer]
+    \node [groupbox, fit=(s1)(s2)(s3)(s4)(s5)(s6)(s7)(s8)(s9), label={[font=\small\bfseries, anchor=north west]north west:Client-Side Intelligence Services (TypeScript)}] (svc) {};
+  \end{scope}
+
+  % Arrows
+  \draw [arr] (user) -- (pres);
+  \draw [arr] (pres) -- (svc);
+\end{tikzpicture}
+}%
+\caption{Expanded FarmShift Nepal System Architecture: 7 UI views and 9 client-side intelligence services.}
+\label{fig:full-arch}
+\end{figure}
+
+\section{End-to-End Data Flow}
+
+Figure~\ref{fig:dataflow} illustrates the complete data flow from user location selection through parallel API retrieval, decision engine processing, and bilingual dashboard rendering.
+
+\begin{figure}[htbp]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{tikzpicture}[
+  node distance=0.8cm and 0.6cm,
+  every node/.style={font=\footnotesize},
+  actor/.style={rectangle, draw=primarygreen, fill=primarygreen!15, text width=2.8cm, text centered, rounded corners=4pt, minimum height=0.8cm, font=\footnotesize\bfseries, line width=1pt},
+  process/.style={rectangle, draw=darkcharcoal, fill=white, text width=3.2cm, text centered, rounded corners=3pt, minimum height=0.7cm},
+  api/.style={rectangle, draw=primarygreen, fill=primarygreen!8, text width=3.2cm, text centered, rounded corners=3pt, minimum height=0.7cm},
+  engine/.style={rectangle, draw=primarygreen!80!black, fill=primarygreen!5, text width=4.5cm, text centered, rounded corners=3pt, minimum height=0.7cm, line width=1pt},
+  output/.style={rectangle, draw=primarygreen, fill=primarygreen!15, text width=4.0cm, text centered, rounded corners=6pt, minimum height=0.8cm, font=\footnotesize\bfseries},
+  arr/.style={draw=primarygreen, -{Latex[length=2mm]}, line width=0.8pt},
+  darr/.style={draw=darkcharcoal, -{Latex[length=2mm]}, line width=0.6pt, dashed},
+  note/.style={font=\scriptsize\itshape, text=gray}
+]
+  % Step 1: User
+  \node [actor] (farmer) {1. Farmer selects\\location};
+
+  % Step 2: Geocode
+  \node [process, right=1.5cm of farmer] (geocode) {2. Nominatim\\Geocoder resolves\\(lat, lon, elev)};
+  \draw [arr] (farmer) -- (geocode);
+
+  % Step 3-5: Parallel API calls
+  \node [api, below=1.2cm of geocode, xshift=-4cm] (nasa) {3. NASA POWER\\5-Year Daily\\Agroclimatology};
+  \node [api, below=1.2cm of geocode] (meteo) {4. Open-Meteo\\7-Day Forecast \&\\30-Day Rain};
+  \node [api, below=1.2cm of geocode, xshift=4cm] (gibs) {5. NASA EOSDIS\\GIBS WMTS\\Raster Tiles};
+
+  \draw [arr] (geocode) -- node[note, left, xshift=-2pt]{parallel} (nasa);
+  \draw [arr] (geocode) -- (meteo);
+  \draw [arr] (geocode) -- node[note, right, xshift=2pt]{parallel} (gibs);
+
+  % Step 6: Decision engines
+  \node [engine, below=1.2cm of meteo] (engines) {6. Decision Engines: Rotation Scoring,\\Crop ML Model, Fertilizer Math, Flood Alert};
+  \draw [arr] (nasa) |- (engines);
+  \draw [arr] (meteo) -- (engines);
+
+  % Step 7: Output
+  \node [output, below=1.0cm of engines] (dashboard) {7. Bilingual Interactive Dashboard\\(Recommendations, NPK, Weekly Tasks)};
+  \draw [arr] (engines) -- (dashboard);
+  \draw [darr] (gibs) |- (dashboard);
+
+  % Step 8: Back to farmer
+  \node [actor, below=0.8cm of dashboard] (result) {8. Farmer receives\\actionable guidance};
+  \draw [arr] (dashboard) -- (result);
+\end{tikzpicture}
+}%
+\caption{End-to-End Data Flow: from user location selection through parallel API retrieval, client-side decision engine processing, and bilingual dashboard rendering.}
+\label{fig:dataflow}
+\end{figure}
 
 \chapter{Data Sources and Earth Observation Ingestion}
 
@@ -434,7 +545,7 @@ Implemented in \texttt{src/components/AgriculturalAssistant.tsx} and \texttt{src
 \section{In-Browser RAG Retrieval Pipeline}
 Rather than calling an unconstrained cloud large language model that might hallucinate synthetic pesticide dosages, FarmShift deploys a client-side Retrieval-Augmented Generation (RAG) pipeline:
 \begin{enumerate}
-  \item \textbf{Query Tokenization and Entity Extraction:} Analyzes bilingual user text for crop entities (e.g., ``rice'', ``धान'') and agronomic topics (e.g., ``urea'', ``मल'', ``acid'', ``चुन'').
+  \item \textbf{Query Tokenization and Entity Extraction:} Analyzes bilingual user text for crop entities (e.g., ``rice'', \textit{dhaan}) and agronomic topics (e.g., ``urea'', \textit{mal}, ``acid'', \textit{chun}).
   \item \textbf{TF-IDF and Tag Re-Ranking:} Passages $p$ in the curated NARC knowledge base are scored:
   \begin{equation}
     \text{Score}(p, q) = S_{\text{crop}}(p, q) + S_{\text{topic}}(p, q) + S_{\text{lexical}}(p, q)
