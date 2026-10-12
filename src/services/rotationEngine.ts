@@ -18,7 +18,7 @@ import type {
   PriorityMode,
   SoilInfo,
 } from '../types';
-import { CROPS, getCropById } from '../data/cropData';
+import { getCropById } from '../data/cropData';
 import { computeMonthlyNormals } from './nasaPower';
 
 // ============================================================
@@ -184,7 +184,6 @@ function scoreWaterCompatibility(
 
   // Dry season score modifier
   const isRabi = season === 'Rabi';
-  const dryMonths = climateData.summary.drySeasonMonths;
 
   if (isRabi) {
     // Rabi crops grown in dry/winter season

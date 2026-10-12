@@ -66,8 +66,8 @@ export interface FarmIntelligenceReport {
 export function generateFarmIntelligenceReport(
   climateData: ClimateDataset | null,
   forecast: WeatherForecastData | null,
-  cropName?: string,
-  soilType?: string
+  _cropName?: string,
+  _soilType?: string
 ): FarmIntelligenceReport {
   const insights: ActionableInsight[] = [];
   let riskScore = 15;

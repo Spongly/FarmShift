@@ -18,9 +18,6 @@ import {
   Menu, 
   X,
   ChevronRight,
-  ShieldCheck,
-  ArrowRight,
-  ExternalLink,
   Compass,
   Loader2,
   Satellite

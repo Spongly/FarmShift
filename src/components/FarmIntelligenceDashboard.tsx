@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { useApp } from '../context/AppContext';
-import { TRANSLATIONS } from '../data/translations';
 import { Card, Button } from './ui';
 import { fetchClimateData } from '../services/nasaPower';
 import { fetchWeatherForecast, type WeatherForecastData } from '../services/weatherForecast';
-import { NASA_GIBS_LAYERS, getGibsWmtsUrl, type SatelliteLayerOption } from '../services/satelliteLayers';
+import { NASA_GIBS_LAYERS, type SatelliteLayerOption } from '../services/satelliteLayers';
 import { generateFarmIntelligenceReport, type FarmIntelligenceReport } from '../services/farmIntelligenceEngine';
 import { InteractiveSatelliteMap } from './InteractiveSatelliteMap';
 import { 
@@ -18,10 +17,8 @@ import {
   ShieldAlert, 
   CheckCircle, 
   Info, 
-  MapPin, 
   ChevronRight, 
   TrendingUp,
-  AlertTriangle,
   Waves
 } from 'lucide-react';
 import {
@@ -43,7 +40,6 @@ interface FarmIntelligenceDashboardProps {
 export function FarmIntelligenceDashboard({ onNavigateToCropPlanner }: FarmIntelligenceDashboardProps) {
   const { state, setClimateLoading, setClimateData, setClimateError } = useApp();
   const { location, climateData, climateStatus, language, soil } = state;
-  const t = TRANSLATIONS[language];
 
   const [forecast, setForecast] = useState<WeatherForecastData | null>(null);
   const [forecastLoading, setForecastLoading] = useState(false);

@@ -12,15 +12,14 @@ import {
 } from 'recharts';
 import { useApp } from '../context/AppContext';
 import { fetchClimateData, computeMonthlyNormals } from '../services/nasaPower';
-import { TRANSLATIONS, NEPALI_MONTHS } from '../data/translations';
+import { NEPALI_MONTHS } from '../data/translations';
 import { Card, Button, StatusBadge, Alert } from './ui';
-import { CloudRain, RefreshCw, Info, Sun, Droplets, Thermometer } from 'lucide-react';
+import { CloudRain, RefreshCw } from 'lucide-react';
 
 export function ClimateExplorer() {
   const { setClimateLoading, setClimateData, setClimateError } = useApp();
   const { location, climateData, climateStatus, language } = useApp().state;
   const [activeTab, setActiveTab] = useState<'normals' | 'summary'>('normals');
-  const t = TRANSLATIONS[language];
 
   const handleFetchData = async () => {
     if (!location) return;

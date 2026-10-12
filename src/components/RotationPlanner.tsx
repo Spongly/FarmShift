@@ -3,9 +3,9 @@ import { useApp } from '../context/AppContext';
 import { CROPS } from '../data/cropData';
 import { TRANSLATIONS, NEPALI_CROP_NAMES, NEPALI_SEASONS, NEPALI_CATEGORIES } from '../data/translations';
 import { runRotationEngine } from '../services/rotationEngine';
-import { Card, SectionHeader, Button, Tag, Select, Label, ScoreBar, Alert } from './ui';
+import { Card, SectionHeader, Button, Select, Label, ScoreBar, Alert } from './ui';
 import type { CropId, PriorityMode } from '../types';
-import { ArrowRight, Sparkles, Check, Info } from 'lucide-react';
+import { ArrowRight, Sparkles, Check } from 'lucide-react';
 
 export function RotationPlanner({ onProceedToComparison }: { onProceedToComparison?: () => void }) {
   const {

@@ -3,19 +3,14 @@ import { useApp } from '../context/AppContext';
 import { TRANSLATIONS, NEPALI_CROP_NAMES, NEPALI_SEASONS, NEPALI_CATEGORIES } from '../data/translations';
 import { LocationSelector } from './LocationSelector';
 import { MapView } from './MapView';
-import { CROPS, NEPAL_PRESETS } from '../data/cropData';
+import { CROPS } from '../data/cropData';
 import { runRotationEngine } from '../services/rotationEngine';
-import type { CropId, PriorityMode, SoilTexture, DrainageClass } from '../types';
+import type { CropId, SoilTexture, DrainageClass } from '../types';
 import { 
-  MapPin, 
-  Sprout, 
-  SlidersHorizontal, 
-  Layers, 
   ArrowRight, 
   ArrowLeft, 
   CheckCircle2, 
   Check, 
-  HelpCircle, 
   Info,
   Droplets,
   Sparkles,
@@ -28,7 +23,7 @@ interface GuidedFarmPlannerProps {
   onExploreWeather?: () => void;
 }
 
-export function GuidedFarmPlanner({ onPlanComplete, onExploreWeather }: GuidedFarmPlannerProps) {
+export function GuidedFarmPlanner({ onPlanComplete, onExploreWeather: _onExploreWeather }: GuidedFarmPlannerProps) {
   const { 
     state, 
     updateSoil, 

@@ -1,6 +1,5 @@
 import { describe, it, expect } from 'vitest';
 import { runRotationEngine, scoreRotationDiversity } from '../src/services/rotationEngine';
-import { CROPS } from '../src/data/cropData';
 import type { FarmInputs, SequencedCrop } from '../src/types';
 
 describe('Crop Rotation Engine Unit Tests', () => {

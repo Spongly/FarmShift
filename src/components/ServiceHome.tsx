@@ -2,20 +2,11 @@ import React from 'react';
 import { useApp } from '../context/AppContext';
 import { TRANSLATIONS } from '../data/translations';
 import { 
-  Sprout, 
   MapPin, 
   ArrowRight, 
-  CloudRain, 
   CheckCircle2, 
-  RotateCw, 
   ShieldCheck, 
-  Layers,
-  Sparkles,
-  Info,
   ChevronRight,
-  ExternalLink,
-  Droplets,
-  Sun,
   Compass,
   Loader2
 } from 'lucide-react';
