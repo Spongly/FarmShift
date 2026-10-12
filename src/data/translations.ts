@@ -545,6 +545,94 @@ export const NEPALI_CROP_NAMES: Record<string, { nepaliName: string; localSubtit
     nepaliName: 'पालुङ्गो',
     localSubtitle: 'पालुङ्गो / सागपात',
   },
+  'barley': {
+    nepaliName: 'जौ',
+    localSubtitle: 'जौ / उवा',
+  },
+  'pigeonpea': {
+    nepaliName: 'रहर',
+    localSubtitle: 'रहर दाल',
+  },
+  'cowpea': {
+    nepaliName: 'बोडी',
+    localSubtitle: 'बोडी (टाँटे/घ्यु)',
+  },
+  'fieldpea': {
+    nepaliName: 'केराउ',
+    localSubtitle: 'केराउ (मटर)',
+  },
+  'rajma-bean': {
+    nepaliName: 'राजमा',
+    localSubtitle: 'राजमा सिमी',
+  },
+  'sesame': {
+    nepaliName: 'तिल',
+    localSubtitle: 'तिल (कालो/सेतो)',
+  },
+  'groundnut': {
+    nepaliName: 'बदाम',
+    localSubtitle: 'भुइँकटहर बदाम (मूँगफली)',
+  },
+  'sunflower': {
+    nepaliName: 'सूर्यमुखी',
+    localSubtitle: 'सूर्यमुखी तेलहन',
+  },
+  'cauliflower': {
+    nepaliName: 'काउली',
+    localSubtitle: 'फूलकाउली',
+  },
+  'cabbage': {
+    nepaliName: 'बन्दागोभी',
+    localSubtitle: 'पातगोभी / बन्दा',
+  },
+  'radish': {
+    nepaliName: 'मूला',
+    localSubtitle: 'मूला (सेतो/रातो)',
+  },
+  'onion': {
+    nepaliName: 'प्याज',
+    localSubtitle: 'प्याज (हिउँदे/बसन्ते)',
+  },
+  'garlic': {
+    nepaliName: 'लसुन',
+    localSubtitle: 'लसुन मसला',
+  },
+  'chilli': {
+    nepaliName: 'खुर्सानी',
+    localSubtitle: 'हरियो/रातो खुर्सानी',
+  },
+  'ginger': {
+    nepaliName: 'अदुवा',
+    localSubtitle: 'अदुवा (सुठो)',
+  },
+  'turmeric': {
+    nepaliName: 'बेसार',
+    localSubtitle: 'हलेदो / बेसार',
+  },
+  'eggplant': {
+    nepaliName: 'भन्टा',
+    localSubtitle: 'बैगुन / भन्टा',
+  },
+  'okra': {
+    nepaliName: 'भिन्डी',
+    localSubtitle: 'रामतोरिया / भिन्डी',
+  },
+  'cucumber': {
+    nepaliName: 'काँक्रो',
+    localSubtitle: 'काँक्रो (स्थानीय/हाइब्रिड)',
+  },
+  'pumpkin': {
+    nepaliName: 'फर्सी',
+    localSubtitle: 'पाकेको/हरियो फर्सी',
+  },
+  'sugarcane': {
+    nepaliName: 'उखु',
+    localSubtitle: 'उखु नगदे बाली',
+  },
+  'mandarin-orange': {
+    nepaliName: 'सुन्तला',
+    localSubtitle: 'सुन्तला फलफूल',
+  },
 };
 
 export const NEPALI_SEASONS: Record<string, string> = {

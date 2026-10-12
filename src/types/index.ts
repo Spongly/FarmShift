@@ -193,6 +193,7 @@ export interface SoilInfo {
 // ============================================================
 
 export type CropId =
+  // Existing 14 crops
   | 'rice-transplanted'
   | 'rice-direct-seeded'
   | 'wheat'
@@ -206,7 +207,34 @@ export type CropId =
   | 'millet-finger'
   | 'buckwheat'
   | 'tomato-winter'
-  | 'spinach';
+  | 'spinach'
+  // Added major cereals & staples
+  | 'barley'
+  // Added major pulses & legumes
+  | 'pigeonpea'
+  | 'cowpea'
+  | 'fieldpea'
+  | 'rajma-bean'
+  // Added major oilseeds
+  | 'sesame'
+  | 'groundnut'
+  | 'sunflower'
+  // Added major vegetables & cash root/spices
+  | 'cauliflower'
+  | 'cabbage'
+  | 'radish'
+  | 'onion'
+  | 'garlic'
+  | 'chilli'
+  | 'ginger'
+  | 'turmeric'
+  | 'eggplant'
+  | 'okra'
+  | 'cucumber'
+  | 'pumpkin'
+  // Added major commercial & fruit crops
+  | 'sugarcane'
+  | 'mandarin-orange';
 
 export interface TemperatureRange {
   min: number;  // °C lower limit
