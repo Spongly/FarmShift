@@ -1,7 +1,7 @@
 {
   "name": "farmshift-nepal",
   "private": true,
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "An open-source agricultural intelligence platform combining NASA Earth observations, numerical weather models, and crop rotation heuristics for Nepal.",
   "author": "Pratik Pokhrel (https://github.com/Spongly)",
   "license": "MIT",
