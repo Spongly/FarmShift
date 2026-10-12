@@ -158,7 +158,7 @@ export function ContactView() {
     e.preventDefault();
 
     // Honeypot — abort silently if bot filled it
-    if (honeypotRef.current?.value) return;
+    if (honeypotRef.current && honeypotRef.current.value.trim() !== '') return;
 
     const errs = validate();
     if (Object.keys(errs).length > 0) {
@@ -307,14 +307,14 @@ export function ContactView() {
           {/* ─── Form ─── */}
           {status !== 'success' && (
             <form onSubmit={handleSubmit} noValidate className="space-y-5">
-              {/* Honeypot anti-spam field — must stay hidden */}
+              {/* Honeypot anti-spam field — hidden from real users */}
               <input
-                type="checkbox"
+                type="text"
                 name="botcheck"
                 ref={honeypotRef}
-                className="hidden"
+                style={{ display: 'none' }}
                 tabIndex={-1}
-                aria-hidden="true"
+                autoComplete="off"
               />
 
               {/* Name + Email row */}
