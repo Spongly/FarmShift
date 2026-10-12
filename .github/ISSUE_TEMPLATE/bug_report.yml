@@ -1,0 +1,48 @@
+name: Bug Report
+description: Create a report to help us improve FarmShift
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: Thanks for reporting an issue! Please describe the problem clearly below.
+  - type: input
+    id: location
+    attributes:
+      label: Farm Location / Preset
+      description: What location or coordinates were selected when the issue occurred?
+      placeholder: e.g. Kathmandu, Chitwan, or 27.7172 N, 85.3240 E
+    validations:
+      required: false
+  - type: textarea
+    id: description
+    attributes:
+      label: Problem Description
+      description: A clear and concise description of what the bug is.
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to Reproduce
+      description: Steps to reproduce the behavior.
+      placeholder: |
+        1. Go to '...'
+        2. Click on '....'
+        3. See error
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected Behavior
+      description: What you expected to happen.
+    validations:
+      required: true
+  - type: input
+    id: environment
+    attributes:
+      label: Environment
+      description: Browser, OS, device
+      placeholder: e.g. Chrome 124, Windows 11 / iOS Safari
+    validations:
+      required: false

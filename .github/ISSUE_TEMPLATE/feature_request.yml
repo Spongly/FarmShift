@@ -1,0 +1,28 @@
+name: Feature Request
+description: Suggest an idea or dataset enhancement for FarmShift
+labels: ["enhancement"]
+body:
+  - type: markdown
+    attributes:
+      value: Thank you for suggesting a feature or dataset improvement!
+  - type: textarea
+    id: problem
+    attributes:
+      label: Is your feature request related to an agricultural or climate problem?
+      description: A clear and concise description of the problem or opportunity.
+    validations:
+      required: true
+  - type: textarea
+    id: solution
+    attributes:
+      label: Proposed Solution or NASA Dataset
+      description: Describe what you would like to see added (e.g. new crop, GPM precipitation threshold, MODIS layer).
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Additional Context or Alternatives Considered
+      description: Any links to research papers, NARC bulletins, or NASA APIs.
+    validations:
+      required: false
