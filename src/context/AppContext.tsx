@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useReducer, useCallback } from 'react';
+import React, { createContext, useContext, useReducer, useCallback, useEffect } from 'react';
 import type {
   AppState,
   Location,
@@ -41,6 +41,67 @@ const INITIAL_STATE: AppState = {
   rotationResult: null,
   selectedCandidateIds: [],
 };
+
+// ============================================================
+// Persistent Storage (localStorage)
+// ============================================================
+
+const STORAGE_KEY = 'farmshift_nepal_app_state_v1';
+
+interface PersistedState {
+  language?: import('../types').AppLanguage;
+  location?: Location | null;
+  soil?: SoilInfo;
+  farmInputs?: Partial<FarmInputs>;
+}
+
+function loadPersistedState(): Partial<AppState> {
+  if (typeof window === 'undefined') return {};
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (!raw) return {};
+    const parsed: PersistedState = JSON.parse(raw);
+    const result: Partial<AppState> = {};
+
+    if (parsed.language === 'en' || parsed.language === 'ne') {
+      result.language = parsed.language;
+    }
+
+    if (parsed.location && typeof parsed.location.latitude === 'number' && typeof parsed.location.longitude === 'number') {
+      result.location = parsed.location;
+    }
+
+    if (parsed.soil) {
+      result.soil = { ...DEFAULT_SOIL, ...parsed.soil };
+    }
+
+    if (parsed.farmInputs) {
+      result.farmInputs = {
+        planningSeasons: typeof parsed.farmInputs.planningSeasons === 'number' ? parsed.farmInputs.planningSeasons : 4,
+        candidateCropIds: Array.isArray(parsed.farmInputs.candidateCropIds) ? parsed.farmInputs.candidateCropIds : [],
+        excludedCropIds: Array.isArray(parsed.farmInputs.excludedCropIds) ? parsed.farmInputs.excludedCropIds : [],
+        previousCropId: parsed.farmInputs.previousCropId ?? null,
+        priority: parsed.farmInputs.priority ?? 'balanced',
+        planningStartSeason: parsed.farmInputs.planningStartSeason ?? 'kharif',
+      };
+    }
+
+    return result;
+  } catch (e) {
+    console.warn('Failed to parse persistent storage for FarmShift:', e);
+    return {};
+  }
+}
+
+function getInitialState(): AppState {
+  const persisted = loadPersistedState();
+  return {
+    ...INITIAL_STATE,
+    ...persisted,
+    soil: persisted.soil ? { ...DEFAULT_SOIL, ...persisted.soil } : DEFAULT_SOIL,
+    farmInputs: persisted.farmInputs ? { ...INITIAL_STATE.farmInputs, ...persisted.farmInputs } : INITIAL_STATE.farmInputs,
+  };
+}
 
 // ============================================================
 // Actions
@@ -213,7 +274,29 @@ const AppContext = createContext<AppContextValue | null>(null);
 // ============================================================
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
-  const [state, dispatch] = useReducer(appReducer, INITIAL_STATE);
+  const [state, dispatch] = useReducer(appReducer, undefined, getInitialState);
+
+  // Sync core state to localStorage whenever location, soil, language, or farm inputs change
+  useEffect(() => {
+    try {
+      const toPersist: PersistedState = {
+        language: state.language,
+        location: state.location,
+        soil: state.soil,
+        farmInputs: {
+          planningSeasons: state.farmInputs.planningSeasons,
+          candidateCropIds: state.farmInputs.candidateCropIds,
+          excludedCropIds: state.farmInputs.excludedCropIds,
+          previousCropId: state.farmInputs.previousCropId,
+          priority: state.farmInputs.priority,
+          planningStartSeason: state.farmInputs.planningStartSeason,
+        },
+      };
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(toPersist));
+    } catch (e) {
+      console.warn('Failed to persist FarmShift state to localStorage:', e);
+    }
+  }, [state.language, state.location, state.soil, state.farmInputs]);
 
   const setLanguage = useCallback((language: import('../types').AppLanguage) => {
     dispatch({ type: 'SET_LANGUAGE', language });
