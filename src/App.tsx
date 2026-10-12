@@ -171,11 +171,11 @@ export function App() {
             </div>
           </div>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden xl:flex items-center gap-1 text-xs font-semibold">
+          {/* Desktop Navigation Links (Responsive scrollable container so all buttons fit neatly) */}
+          <nav className="hidden lg:flex items-center gap-0.5 text-xs font-semibold overflow-x-auto py-1 scrollbar-none min-w-0 flex-1 justify-center px-2">
             <button
               onClick={() => navigateTo('home')}
-              className={`px-3 py-2 rounded transition-colors whitespace-nowrap ${
+              className={`px-2.5 py-1.5 rounded transition-colors whitespace-nowrap shrink-0 ${
                 currentStep === 'home'
                   ? 'bg-forest-50 text-forest-800 font-bold border-b-2 border-forest-700'
                   : 'text-ink-secondary hover:text-ink hover:bg-stone-100'
@@ -186,7 +186,7 @@ export function App() {
 
             <button
               onClick={() => navigateTo('my-farm')}
-              className={`px-3 py-2 rounded transition-colors flex items-center gap-1.5 whitespace-nowrap ${
+              className={`px-2.5 py-1.5 rounded transition-colors flex items-center gap-1 whitespace-nowrap shrink-0 ${
                 currentStep === 'my-farm' || currentStep === 'workspace'
                   ? 'bg-forest-50 text-forest-800 font-bold border-b-2 border-forest-700'
                   : 'text-ink-secondary hover:text-ink hover:bg-stone-100'
@@ -198,7 +198,7 @@ export function App() {
 
             <button
               onClick={() => navigateTo('intelligence')}
-              className={`px-3 py-2 rounded transition-colors flex items-center gap-1.5 whitespace-nowrap ${
+              className={`px-2.5 py-1.5 rounded transition-colors flex items-center gap-1 whitespace-nowrap shrink-0 ${
                 currentStep === 'intelligence'
                   ? 'bg-forest-50 text-forest-800 font-bold border-b-2 border-forest-700'
                   : 'text-ink-secondary hover:text-ink hover:bg-stone-100'
@@ -210,7 +210,7 @@ export function App() {
 
             <button
               onClick={() => navigateTo('climate')}
-              className={`px-3 py-2 rounded transition-colors flex items-center gap-1.5 whitespace-nowrap ${
+              className={`px-2.5 py-1.5 rounded transition-colors flex items-center gap-1 whitespace-nowrap shrink-0 ${
                 currentStep === 'climate' || currentStep === 'weather'
                   ? 'bg-forest-50 text-forest-800 font-bold border-b-2 border-forest-700'
                   : 'text-ink-secondary hover:text-ink hover:bg-stone-100'
@@ -222,7 +222,7 @@ export function App() {
 
             <button
               onClick={() => navigateTo('planner')}
-              className={`px-3 py-2 rounded transition-colors flex items-center gap-1.5 whitespace-nowrap ${
+              className={`px-2.5 py-1.5 rounded transition-colors flex items-center gap-1 whitespace-nowrap shrink-0 ${
                 currentStep === 'planner' || currentStep === 'plan-crops' || currentStep === 'compare'
                   ? 'bg-forest-50 text-forest-800 font-bold border-b-2 border-forest-700'
                   : 'text-ink-secondary hover:text-ink hover:bg-stone-100'
@@ -234,7 +234,7 @@ export function App() {
 
             <button
               onClick={() => navigateTo('soil-health')}
-              className={`px-3 py-2 rounded transition-colors flex items-center gap-1.5 whitespace-nowrap ${
+              className={`px-2.5 py-1.5 rounded transition-colors flex items-center gap-1 whitespace-nowrap shrink-0 ${
                 currentStep === 'soil-health'
                   ? 'bg-forest-50 text-forest-800 font-bold border-b-2 border-forest-700'
                   : 'text-ink-secondary hover:text-ink hover:bg-stone-100'
@@ -246,7 +246,7 @@ export function App() {
 
             <button
               onClick={() => navigateTo('action-plan')}
-              className={`px-3 py-2 rounded transition-colors flex items-center gap-1.5 whitespace-nowrap ${
+              className={`px-2.5 py-1.5 rounded transition-colors flex items-center gap-1 whitespace-nowrap shrink-0 ${
                 currentStep === 'action-plan'
                   ? 'bg-forest-50 text-forest-800 font-bold border-b-2 border-forest-700'
                   : 'text-ink-secondary hover:text-ink hover:bg-stone-100'
@@ -258,7 +258,7 @@ export function App() {
 
             <button
               onClick={() => navigateTo('assistant')}
-              className={`px-3 py-2 rounded transition-colors flex items-center gap-1.5 whitespace-nowrap ${
+              className={`px-2.5 py-1.5 rounded transition-colors flex items-center gap-1 whitespace-nowrap shrink-0 ${
                 currentStep === 'assistant'
                   ? 'bg-forest-50 text-forest-800 font-bold border-b-2 border-forest-700'
                   : 'text-ink-secondary hover:text-ink hover:bg-stone-100'
@@ -270,7 +270,7 @@ export function App() {
 
             <button
               onClick={() => navigateTo('about')}
-              className={`px-3 py-2 rounded transition-colors flex items-center gap-1.5 whitespace-nowrap ${
+              className={`px-2.5 py-1.5 rounded transition-colors flex items-center gap-1 whitespace-nowrap shrink-0 ${
                 currentStep === 'about' || currentStep === 'methodology'
                   ? 'bg-forest-50 text-forest-800 font-bold border-b-2 border-forest-700'
                   : 'text-ink-secondary hover:text-ink hover:bg-stone-100'
@@ -282,23 +282,23 @@ export function App() {
           </nav>
 
           {/* Action / Current Selected Pill */}
-          <div className="flex items-center gap-2.5 shrink-0">
+          <div className="flex items-center gap-2 shrink-0">
             {location && (
               <div 
                 onClick={() => navigateTo('my-farm')}
-                className="hidden md:flex items-center gap-1.5 px-3 py-1.5 bg-stone-50 border border-stone-200 rounded text-xs text-ink hover:border-forest-600 cursor-pointer transition-colors"
+                className="hidden 2xl:flex items-center gap-1.5 px-2.5 py-1.5 bg-stone-50 border border-stone-200 rounded text-xs text-ink hover:border-forest-600 cursor-pointer transition-colors"
                 title={location.name}
               >
                 <MapPin className="w-3.5 h-3.5 text-forest-600 shrink-0" />
-                <span className="font-semibold truncate max-w-[130px]">{location.name}</span>
+                <span className="font-semibold truncate max-w-[110px]">{location.name}</span>
               </div>
             )}
 
             <button
               onClick={() => navigateTo('my-farm')}
-              className="hidden sm:flex items-center gap-2 px-5 py-2.5 rounded bg-forest-700 hover:bg-forest-800 text-white font-bold text-xs sm:text-sm shadow-xs transition-colors"
+              className="hidden sm:flex items-center gap-1.5 px-3.5 py-2 rounded bg-forest-700 hover:bg-forest-800 text-white font-bold text-xs shadow-xs transition-colors shrink-0"
             >
-              <Sprout className="w-4 h-4" />
+              <Sprout className="w-3.5 h-3.5" />
               <span>{t.nav.startPlanning}</span>
             </button>
 
