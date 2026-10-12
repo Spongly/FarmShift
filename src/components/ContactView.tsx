@@ -168,6 +168,9 @@ export function ContactView() {
     setErrors({});
     setStatus('loading');
 
+    const accessKey =
+      import.meta.env.VITE_WEB3FORMS_KEY || 'ac3b183e-ac6b-4607-b139-8a9d81d4f080';
+
     try {
       const res = await fetch('https://api.web3forms.com/submit', {
         method: 'POST',
@@ -176,7 +179,7 @@ export function ContactView() {
           Accept: 'application/json',
         },
         body: JSON.stringify({
-          access_key: import.meta.env.VITE_WEB3FORMS_KEY ?? '',
+          access_key: accessKey,
           name: fields.name.trim(),
           email: fields.email.trim(),
           role: fields.role,
@@ -186,11 +189,24 @@ export function ContactView() {
         }),
       });
 
-      const data: { success: boolean; message?: string } = await res.json();
-      if (!data.success) throw new Error(data.message ?? 'Submission failed');
+      const text = await res.text();
+      let data: { success: boolean; message?: string };
+      try {
+        data = JSON.parse(text);
+      } catch {
+        throw new Error(
+          res.status === 403
+            ? 'Web3Forms Cloudflare security challenge blocked the request. Please submit from your browser or verify your domain in Web3Forms dashboard.'
+            : `Server returned HTTP ${res.status}: ${text.slice(0, 100)}`
+        );
+      }
+
+      if (!data.success) {
+        throw new Error(data.message ?? 'Submission failed. Please try again.');
+      }
       setStatus('success');
     } catch (err) {
-      const msg = err instanceof Error ? err.message : 'Unknown error';
+      const msg = err instanceof Error ? err.message : 'Unknown error occurred';
       setErrorMsg(msg);
       setStatus('error');
     }
