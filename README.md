@@ -50,7 +50,16 @@ Experience the platform live at: **[https://farmshift.pokhrelpratik.com.np/](htt
 | **Climate Explorer** | 5-year climatological normals from NASA POWER, seasonal monsoon distributions, thermal envelopes, and data completeness metrics. |
 | **Methodology & Transparency** | Full scientific audit explaining formulas, weights, satellite resolutions, data latency, and model boundaries. |
 
-> Detailed architectural specifications and safety principles are documented in [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) and [`docs/AGRICULTURAL_SAFETY.md`](docs/AGRICULTURAL_SAFETY.md).
+> ### 📚 Comprehensive Technical Documentation Suite
+> Detailed architectural, mathematical, and algorithmic documentation is available in the [`docs/`](docs/) directory:
+> - [**Full Technical Report**](docs/FARMSHIFT_TECHNICAL_REPORT.md) — Comprehensive 13-section academic and engineering report
+> - [**Data Sources & APIs**](docs/DATA_SOURCES_AND_APIS.md) — Exact specifications for NASA POWER, GIBS, Open-Meteo & Nominatim
+> - [**Mathematical Methodology**](docs/MATHEMATICAL_METHODOLOGY.md) — Exact rotation scoring formulas, ML ensemble math & fertilizer algebra
+> - [**AI Assistant & RAG Architecture**](docs/AI_ASSISTANT_ARCHITECTURE.md) — In-browser retrieval pipeline, TF-IDF ranking & NARC citations
+> - [**Internal Data Dictionary**](docs/DATA_DICTIONARY.md) — TypeScript type schemas, units, and null-safety definitions
+> - [**Limitations & Validation Roadmap**](docs/LIMITATIONS_AND_VALIDATION.md) — Spatial resolution bounds, safety rules & field test roadmap
+> - [**System Architecture**](docs/ARCHITECTURE.md) — Component topology & Mermaid data flow diagrams
+> - [**Agricultural Safety Principles**](docs/AGRICULTURAL_SAFETY.md) — Agronomic boundaries, liming separations & flood triggers
 
 ---
 
