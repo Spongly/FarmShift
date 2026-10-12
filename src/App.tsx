@@ -171,8 +171,8 @@ export function App() {
             </div>
           </div>
 
-          {/* Desktop Navigation Links (Responsive scrollable container so all buttons fit neatly) */}
-          <nav className="hidden lg:flex items-center gap-0.5 text-xs font-semibold overflow-x-auto py-1 scrollbar-none min-w-0 flex-1 justify-center px-2">
+          {/* Desktop Navigation Links (Responsive layout that fits neatly without horizontal scrollbars) */}
+          <nav className="hidden lg:flex items-center gap-1 text-xs font-semibold flex-wrap justify-center flex-1 px-1">
             <button
               onClick={() => navigateTo('home')}
               className={`px-2.5 py-1.5 rounded transition-colors whitespace-nowrap shrink-0 ${
