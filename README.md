@@ -43,12 +43,14 @@ Experience the platform live at: **[https://farmshift.pokhrelpratik.com.np/](htt
 | **Public Service Home** | Photo-led editorial portal presenting regional agroecological context (Mid-Hills vs. Terai), instant GPS location detection, and guided step-by-step navigation. |
 | **My Farm Workspace** | Geocode any farm in Nepal (via Nominatim OSM) or drop a pin on the interactive Leaflet map. Input edaphic soil parameters (texture, pH, organic matter, and irrigation access). |
 | **NASA Intelligence Dashboard** | Multi-layer satellite cartography (GIBS WMTS tiles), 30-day precipitation history, 7-day numerical forecasts, and color-coded agro-meteorological advisories. |
-| **Flood Early Warning Card** | Dedicated alert assessing SMAP pre-storm surface wetness against incoming rainfall to evaluate flash flood and erosion risks. |
+| **Soil & Fertilizer Guidance** | Official Nepal MoALD & NARC dosage calculator determining Urea, DAP, Potash, compost, and agricultural lime per Ropani/Bigha. |
+| **Weekly Action Plan** | Dynamic 4-week task calendar integrating upcoming 7-day rainfall forecasts with crop growth stages. |
+| **Agricultural AI Assistant** | Grounded retrieval-augmented question answering referencing authentic NARC & MoALD research bulletins with zero hallucination. |
+| **Rotation Planner & ML Model** | Multi-criteria scored rotations enhanced by client-side Machine Learning Decision Tree probabilities. |
 | **Climate Explorer** | 5-year climatological normals from NASA POWER, seasonal monsoon distributions, thermal envelopes, and data completeness metrics. |
-| **Rotation Planner & Comparison** | Multi-criteria scored rotation candidates evaluated side-by-side with trade-off explanations and downloadable CSV decision summaries. |
 | **Methodology & Transparency** | Full scientific audit explaining formulas, weights, satellite resolutions, data latency, and model boundaries. |
 
-> Visual screenshots and UI documentation are archived in [`docs/screenshots/`](docs/screenshots/).
+> Detailed architectural specifications and safety principles are documented in [`docs/ARCHITECTURE.md`](docs/ARCHITECTURE.md) and [`docs/AGRICULTURAL_SAFETY.md`](docs/AGRICULTURAL_SAFETY.md).
 
 ---
 

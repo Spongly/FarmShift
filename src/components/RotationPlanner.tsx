@@ -3,9 +3,10 @@ import { useApp } from '../context/AppContext';
 import { CROPS } from '../data/cropData';
 import { TRANSLATIONS, NEPALI_CROP_NAMES, NEPALI_SEASONS, NEPALI_CATEGORIES } from '../data/translations';
 import { runRotationEngine } from '../services/rotationEngine';
+import { predictCropSuitability, encodeSoilTexture } from '../services/cropMlModel';
 import { Card, SectionHeader, Button, Select, Label, ScoreBar, Alert } from './ui';
 import type { CropId, PriorityMode } from '../types';
-import { ArrowRight, Sparkles, Check } from 'lucide-react';
+import { ArrowRight, Sparkles, Check, Cpu } from 'lucide-react';
 
 export function RotationPlanner({ onProceedToComparison }: { onProceedToComparison?: () => void }) {
   const {
@@ -264,6 +265,31 @@ export function RotationPlanner({ onProceedToComparison }: { onProceedToComparis
                             );
                           })}
                         </div>
+
+                        {/* ML Prediction Badge */}
+                        {(() => {
+                          const firstCrop = candidate.sequence.crops[0]?.cropId;
+                          if (!firstCrop) return null;
+                          const ml = predictCropSuitability(firstCrop, {
+                            elevationMeters: location?.elevation ?? 1200,
+                            meanAnnualTemp: climateData?.summary.meanAnnualTemp ?? 20,
+                            annualPrecipitation: climateData?.summary.annualPrecipitation ?? 1200,
+                            sowingMonthTemp: 22,
+                            seasonRainfallMm: 600,
+                            soilPh: soil.ph ?? 6.2,
+                            soilTextureScore: encodeSoilTexture(soil.texture),
+                            irrigationAvailable: soil.irrigationAvailable ? 1 : 0,
+                          });
+                          return (
+                            <div className="flex items-center gap-1.5 pt-1 text-3xs text-ink-muted">
+                              <Cpu className="w-3 h-3 text-forest-700" />
+                              <span>ML Suitability:</span>
+                              <span className="font-bold text-forest-800 font-mono">
+                                {Math.round(ml.predictedProbability * 100)}% ({ml.suitabilityClass})
+                              </span>
+                            </div>
+                          );
+                        })()}
 
                         {/* Assessment note */}
                         <p className="text-xs text-ink-muted pt-1">

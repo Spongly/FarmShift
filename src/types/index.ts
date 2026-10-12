@@ -374,6 +374,9 @@ export type AppStep =
   | 'my-farm'
   | 'weather'
   | 'plan-crops'
+  | 'soil-health'
+  | 'action-plan'
+  | 'assistant'
   | 'marketplace'
   | 'about'
   // Preserving legacy aliases so any subcomponents continue to work smoothly

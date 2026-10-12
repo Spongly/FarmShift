@@ -8,6 +8,9 @@ import { RotationPlanner } from './components/RotationPlanner';
 import { ComparisonWorkspace } from './components/ComparisonWorkspace';
 import { MethodologyView } from './components/MethodologyView';
 import { FarmIntelligenceDashboard } from './components/FarmIntelligenceDashboard';
+import { SoilNutrientModule } from './components/SoilNutrientModule';
+import { ActionPlannerView } from './components/ActionPlannerView';
+import { AgriculturalAssistant } from './components/AgriculturalAssistant';
 import { 
   Sprout, 
   MapPin, 
@@ -20,7 +23,10 @@ import {
   ChevronRight,
   Compass,
   Loader2,
-  Satellite
+  Satellite,
+  FlaskConical,
+  CalendarDays,
+  Bot
 } from 'lucide-react';
 import { reverseGeocodeCoordinates, coordinatesToLocation } from './services/geocoding';
 import type { AppStep } from './types';
@@ -227,6 +233,42 @@ export function App() {
             </button>
 
             <button
+              onClick={() => navigateTo('soil-health')}
+              className={`px-3 py-2 rounded transition-colors flex items-center gap-1.5 whitespace-nowrap ${
+                currentStep === 'soil-health'
+                  ? 'bg-forest-50 text-forest-800 font-bold border-b-2 border-forest-700'
+                  : 'text-ink-secondary hover:text-ink hover:bg-stone-100'
+              }`}
+            >
+              <FlaskConical className="w-3.5 h-3.5 text-forest-600" />
+              <span>{t.nav.soilHealth}</span>
+            </button>
+
+            <button
+              onClick={() => navigateTo('action-plan')}
+              className={`px-3 py-2 rounded transition-colors flex items-center gap-1.5 whitespace-nowrap ${
+                currentStep === 'action-plan'
+                  ? 'bg-forest-50 text-forest-800 font-bold border-b-2 border-forest-700'
+                  : 'text-ink-secondary hover:text-ink hover:bg-stone-100'
+              }`}
+            >
+              <CalendarDays className="w-3.5 h-3.5 text-forest-600" />
+              <span>{t.nav.actionPlan}</span>
+            </button>
+
+            <button
+              onClick={() => navigateTo('assistant')}
+              className={`px-3 py-2 rounded transition-colors flex items-center gap-1.5 whitespace-nowrap ${
+                currentStep === 'assistant'
+                  ? 'bg-forest-50 text-forest-800 font-bold border-b-2 border-forest-700'
+                  : 'text-ink-secondary hover:text-ink hover:bg-stone-100'
+              }`}
+            >
+              <Bot className="w-3.5 h-3.5 text-forest-600" />
+              <span>{t.nav.assistant}</span>
+            </button>
+
+            <button
               onClick={() => navigateTo('about')}
               className={`px-3 py-2 rounded transition-colors flex items-center gap-1.5 whitespace-nowrap ${
                 currentStep === 'about' || currentStep === 'methodology'
@@ -332,6 +374,45 @@ export function App() {
               <span className="flex items-center gap-2">
                 <RotateCw className="w-4 h-4 text-forest-600" />
                 {t.nav.planner}
+              </span>
+              <ChevronRight className="w-4 h-4 text-stone-400" />
+            </button>
+
+            <button
+              onClick={() => navigateTo('soil-health')}
+              className={`w-full text-left px-3 py-2.5 rounded text-sm font-semibold flex items-center justify-between ${
+                currentStep === 'soil-health' ? 'bg-forest-50 text-forest-800' : 'text-ink hover:bg-stone-100'
+              }`}
+            >
+              <span className="flex items-center gap-2">
+                <FlaskConical className="w-4 h-4 text-forest-600" />
+                {t.nav.soilHealth}
+              </span>
+              <ChevronRight className="w-4 h-4 text-stone-400" />
+            </button>
+
+            <button
+              onClick={() => navigateTo('action-plan')}
+              className={`w-full text-left px-3 py-2.5 rounded text-sm font-semibold flex items-center justify-between ${
+                currentStep === 'action-plan' ? 'bg-forest-50 text-forest-800' : 'text-ink hover:bg-stone-100'
+              }`}
+            >
+              <span className="flex items-center gap-2">
+                <CalendarDays className="w-4 h-4 text-forest-600" />
+                {t.nav.actionPlan}
+              </span>
+              <ChevronRight className="w-4 h-4 text-stone-400" />
+            </button>
+
+            <button
+              onClick={() => navigateTo('assistant')}
+              className={`w-full text-left px-3 py-2.5 rounded text-sm font-semibold flex items-center justify-between ${
+                currentStep === 'assistant' ? 'bg-forest-50 text-forest-800' : 'text-ink hover:bg-stone-100'
+              }`}
+            >
+              <span className="flex items-center gap-2">
+                <Bot className="w-4 h-4 text-forest-600" />
+                {t.nav.assistant}
               </span>
               <ChevronRight className="w-4 h-4 text-stone-400" />
             </button>
@@ -534,6 +615,69 @@ export function App() {
             <div className="pt-4 border-t border-stone-200">
               <ComparisonWorkspace />
             </div>
+          </div>
+        )}
+
+        {/* VIEW 4B: SOIL HEALTH & FERTILIZER MANAGEMENT */}
+        {currentStep === 'soil-health' && (
+          <div className="space-y-6">
+            <div className="bg-white border border-stone-200 rounded-lg p-6 shadow-xs">
+              <span className="text-2xs font-bold uppercase tracking-wider text-forest-800 bg-forest-50 px-2 py-0.5 rounded">
+                {language === 'ne' ? 'माटो तथा पोषण व्यवस्थापन' : 'Soil Health & Plant Nutrition'}
+              </span>
+              <h1 className="text-xl sm:text-2xl font-bold text-ink mt-1">
+                {language === 'ne' ? 'माटो परीक्षण तथा बालीअनुसार मलखाद योजना' : 'Soil Testing & Crop-Specific Fertilizer Calculator'}
+              </h1>
+              <p className="text-xs sm:text-sm text-ink-secondary mt-0.5">
+                {language === 'ne'
+                  ? 'नेपाल सरकार कृषि मन्त्रालय र नार्कको सिफारिस अनुसार रासायनिक तथा प्राङ्गारिक मलको सन्तुलित मात्रा निकाल्नुहोस्।'
+                  : 'Calculate balanced NPK commercial fertilizers, compost, and agricultural lime rates for your farm.'}
+              </p>
+            </div>
+
+            <SoilNutrientModule />
+          </div>
+        )}
+
+        {/* VIEW 4C: WEEKLY ACTIONABLE FARM PLAN */}
+        {currentStep === 'action-plan' && (
+          <div className="space-y-6">
+            <div className="bg-white border border-stone-200 rounded-lg p-6 shadow-xs">
+              <span className="text-2xs font-bold uppercase tracking-wider text-forest-800 bg-forest-50 px-2 py-0.5 rounded">
+                {language === 'ne' ? 'कार्यतालिका' : 'Actionable Calendar'}
+              </span>
+              <h1 className="text-xl sm:text-2xl font-bold text-ink mt-1">
+                {language === 'ne' ? 'साप्ताहिक कृषि कार्ययोजना' : 'Personalized Weekly Farm Task Schedule'}
+              </h1>
+              <p className="text-xs sm:text-sm text-ink-secondary mt-0.5">
+                {language === 'ne'
+                  ? 'मौसम पूर्वानुमान तथा बालीको वृद्धिको आधारमा तयार पारिएको ४-हप्ते व्यावहारिक कार्ययोजना।'
+                  : 'Weather-triggered agronomic tasks and timely field operations tailored to your farm.'}
+              </p>
+            </div>
+
+            <ActionPlannerView />
+          </div>
+        )}
+
+        {/* VIEW 4D: EVIDENCE-GROUNDED AGRICULTURAL AI ASSISTANT */}
+        {currentStep === 'assistant' && (
+          <div className="space-y-6">
+            <div className="bg-white border border-stone-200 rounded-lg p-6 shadow-xs">
+              <span className="text-2xs font-bold uppercase tracking-wider text-forest-800 bg-forest-50 px-2 py-0.5 rounded">
+                {language === 'ne' ? 'कृषि एआई परामर्श' : 'Agronomic RAG Assistant'}
+              </span>
+              <h1 className="text-xl sm:text-2xl font-bold text-ink mt-1">
+                {language === 'ne' ? 'नेपाल कृषि अनुसन्धान परिषद् (NARC) मा आधारित एआई सल्लाहकार' : 'Evidence-Grounded Agricultural AI Assistant'}
+              </h1>
+              <p className="text-xs sm:text-sm text-ink-secondary mt-0.5">
+                {language === 'ne'
+                  ? 'प्रमाणित वैज्ञानिक अनुसन्धान तथा नासा भू-उपग्रह तथ्याङ्कबाट तपाईंका प्रश्नहरूको भरपर्दो उत्तर पाउनुहोस्।'
+                  : 'Ask practical farming questions grounded in verified Nepalese research bulletins and NASA climate observations.'}
+              </p>
+            </div>
+
+            <AgriculturalAssistant />
           </div>
         )}
 
