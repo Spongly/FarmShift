@@ -12,7 +12,7 @@
 > Developed for the **NASA Space Apps Challenge 2026** challenge: *“Field Shift: Adapting Farms with NASA Data”*.
 
 🌐 **Live Website:** [https://farmshift.pokhrelpratik.com.np/](https://farmshift.pokhrelpratik.com.np/)  
-👤 **Author:** [Pratik Pokhrel](https://pokhrelpratik.com.np/) (`@Spongly`)  
+👤 **Author:** [Team Recursive]  
 📂 **Repository:** [https://github.com/Spongly/farmshift](https://github.com/Spongly/farmshift)
 
 ---
